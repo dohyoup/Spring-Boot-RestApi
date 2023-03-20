@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.domain.post.PostMapper">
+	<!-- MEMBERS 테이블 전체 컬럼 -->
+
+	<sql id ="postColumns">
+		 MEMBER_ID
+		,MEMBER_NICK_NAME
+		,MEMBER_PASSWORD
+		,MEMBER_PHONE
+		,MEMBER_EMAIL
+		,MEMBER_GENDER
+	</sql>
+	<!-- 회원 추가 -->
+	<insert id="save" parameterType="com.study.domain.post.PostRequest">
+		INSERT INTO MEMBERS (
+		<include refid="postColumns" />
+		) VALUES (
+		  #{id}
+		, #{nickName}
+		, #{pw}
+		, #{phone}
+		, #{email}
+		, #{gender}
+		)
+	</insert>
+	<!-- 전체 회원 조회 -->
+	<select id="findAll" resultType="com.study.domain.post.PostResponse">
+		SELECT
+		<include refid="postColumns"/>
+		FROM MEMBERS
+	</select>
+	<!-- 단일 회원 상세 조회 -->
+	<select id="findById" parameterType="String" resultType="com.study.domain.post.PostResponse">
+		SELECT
+			<include refid="postColumns"/>
+		FROM MEMBERS
+		WHERE MEMBER_ID = #{id}
+
+	</select>
+	 <!-- 회원정보 수정 -->
+    <update id="update" parameterType="com.study.domain.post.PostRequest">
+        UPDATE MEMBERS
+        SET
+              MEMBER_NICK_NAME = #{nickName}
+            , MEMBER_PASSWORD = #{pw}
+            , MEMBER_PHONE = #{phone}
+            , MEMBER_EMAIL = #{email}
+			, MEMBER_GENDER = #{gender}
+        WHERE
+            MEMBER_ID = #{id}
+    </update>
+	 <!-- 회원 삭제 -->
+    <delete id="deleteById" parameterType="String">
+        DELETE MEMBERS
+        WHERE
+            MEMBER_ID = #{id}
+    </delete>
+
+</mapper>
