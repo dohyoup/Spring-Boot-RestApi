@@ -1,11 +1,9 @@
 package com.study.domain.search;
 
 import lombok.Getter;
-import lombok.Setter;
 
 @Getter
-@Setter
-public class UserRequest {
+public class MemberResponse {
     private String id;
 	private String nickName;
 	private String pw;

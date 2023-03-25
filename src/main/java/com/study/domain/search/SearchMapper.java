@@ -1,7 +1,6 @@
 package com.study.domain.search;
 
 import org.apache.ibatis.annotations.Mapper;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -13,21 +12,29 @@ public interface SearchMapper {
          *
          * @return 회원 전체 정보
          */
-        List<UserResponse> getAllUsers();
+        List<MemberResponse> getAllUsers(SearchDto params);
+
+         /**
+          * 게시글 수 카운팅
+          * @param params - search conditions
+          * @return 게시글 수
+          */
+         int count(SearchDto params);
 
          /**
          ** 회원 상세정보 조회
          *
-         * * * @param id - PK
+         * * * @param id, email
          * @return 회원 상세정보
          */
-        UserResponse getUser(String params);
+        MemberResponse getUser(String params);
 
-        /**
-         ** 회원 정보 추가
+         /**
+         ** 회원 주문정보 조회
          *
-         * * * @param UserRequest - PK
-         * @return 성공 여부
+         * * * @param id, email
+         * @return 회원 상세정보
          */
-        UserRequest registerUser(UserRequest userinfo);
+        OrderResponse getOrder(String params);
+
 }

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.study.domain.search.SearchMapper">
+	<!-- MEMBERS 테이블 전체 컬럼 -->
+    <sql id ="memberColumns">
+		 MEMBER_ID as id
+		,MEMBER_NICK_NAME as nickName
+		,MEMBER_PASSWORD as pw
+		,MEMBER_PHONE as phone
+		,MEMBER_EMAIL as email
+		,MEMBER_GENDER as gender
+	</sql>
+
+    <!-- 전체 회원 조회 -->
+	<select id="getAllUsers" parameterType="com.study.domain.search.SearchDto" resultType="com.study.domain.search.MemberResponse">
+		SELECT
+		<include refid="memberColumns" />
+		FROM MEMBERS
+		ORDER BY MEMBER_ID DESC
+		LIMIT #{pagination.limitStart}, #{recordSize};
+	</select>
+
+	<!-- MEMBERS 테이블 전체 조회 수-->
+	<select id="count" resultType="int" >
+		SELECT
+			COUNT(*)
+		FROM
+			MEMBERS
+	</select>
+	<!--단일 회원 조회 -->
+	<select id="getUser" parameterType="String" resultType="com.study.domain.search.MemberResponse">
+		SELECT
+		<include refid="memberColumns" />
+		FROM MEMBERS
+		WHERE MEMBER_ID = #{id}
+		OR MEMBER_EMAIL = #{email}
+	</select>
+
+	<!--단일 주문 조회 -->
+	<select id="getOrder" parameterType="String" resultType="com.study.domain.search.OrderResponse">
+		SELECT
+		 o.ORDER_CODE as orderCode
+		,o.MEMBER_ID as id
+		,o.PRODUCT as product
+		,o.ORDER_DATE as orderDate
+		FROM ORDER_INFO o
+		JOIN MEMBERS m
+		ON o.MEMBER_ID = m.MEMBER_ID
+		WHERE o.MEMBER_ID = #{id}
+		OR m.MEMBER_EMAIL = #{email}
+	</select>
+</mapper>
