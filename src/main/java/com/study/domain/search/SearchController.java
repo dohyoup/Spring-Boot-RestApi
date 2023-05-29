@@ -8,19 +8,26 @@ import java.util.List;
 @RestController
 @RequestMapping("/users")
 public class SearchController {
-
 		@Autowired
 		private SearchService searchService;
 
 		//전체회원 조회
+
+		/*
+		@GetMapping()
+		public List<MemberResponse> getAllUsers(){
+			return searchService.getAllUsers();
+		}
+		*/
+
+		//페이지 처리된 전체조회
 		@GetMapping("")
 		public PagingResponse<MemberResponse> getAllUsers(SearchDto params){
-
 			return searchService.getAllUsers(params);
 		}
 
 		//단일회원 조회
-		@GetMapping("/{params}")
+		@GetMapping("/one/{params}")
 		public MemberResponse getUser(@PathVariable String params) {
 			return searchService.getUser(params);
 		}
@@ -30,4 +37,5 @@ public class SearchController {
 		public OrderResponse getOrder(@PathVariable String params){
 			return searchService.getOrder(params);
 		}
+
 }

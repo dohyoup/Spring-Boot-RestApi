@@ -15,6 +15,11 @@ public class SearchService {
     private SearchMapper searchMapper;
 
     // 전체 회원 조회
+    /*
+    public List<MemberResponse> getAllUsers(){
+        return searchMapper.getAllUsers();
+    }
+    */
     public PagingResponse<MemberResponse> getAllUsers(final SearchDto params){
 
         int count = searchMapper.count(params);

@@ -12,6 +12,9 @@ public interface SearchMapper {
          *
          * @return 회원 전체 정보
          */
+        /*
+        List<MemberResponse> getAllUsers();
+*/
         List<MemberResponse> getAllUsers(SearchDto params);
 
          /**
